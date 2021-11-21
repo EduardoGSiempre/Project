@@ -30,3 +30,8 @@ void GameObject::Draw()
 {
   window->draw(*drawable->GetSprite());
 }
+
+sf::Vector2f GameObject::GetPosition()
+{
+  return rigidbody->GetPositionSFML();
+}

@@ -10,7 +10,6 @@ sf::Vector2f* position, sf::RenderWindow*& window, b2World*& world) :
 GameObject(textureUrl, col, row, width, height, scale, position, b2BodyType::b2_dynamicBody, window, world)
 {
   this->moveSpeed = moveSpeed;
-
   rigidbody->SetRotationFreeze(true);
 
   idleAnimation = new Animation(0, 5, drawable, 0.05f, 5);
@@ -59,3 +58,4 @@ sf::Sprite* Character::GetSprite() const
 {
   return drawable->GetSprite();
 }
+
