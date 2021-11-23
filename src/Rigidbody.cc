@@ -35,6 +35,7 @@ b2Body* Rigidbody::GetBody() const
 sf::Vector2f Rigidbody::GetPositionSFML() const
 {
   return sf::Vector2f(body->GetPosition().x, body->GetPosition().y);
+
 }
 
 void Rigidbody::Move(b2Vec2 direction)

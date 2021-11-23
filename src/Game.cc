@@ -5,6 +5,7 @@
 #include "Animation.hh"
 #include "Rigidbody.hh"
 #include "Character.hh"
+#include "Enemy.hh"
 #include<iostream>
 #include "TileGroup.hh"
 #include "ContactEventManager.hh"
@@ -18,6 +19,7 @@ const float playerSpeed{600.f};
 const float playerScale{4.f};
 
 Character* character1{};
+Enemy* enemy{};
 GameObject* tv{};
 GameObject* chair_living1{};
 GameObject* box1{};
@@ -40,14 +42,22 @@ Game::Game()
   gravity = new b2Vec2(0.f, 0.f);
   world = new b2World(*gravity);
   drawPhysics = new DrawPhysics(window);
-  contactEventManager = new ContactEventManager();
+  deleteList = new std::vector<GameObject*>();
+  contactEventManager = new ContactEventManager(deleteList);
   gameObjects = new std::vector<GameObject*>();
+  
 
   character1 = new Character("assets/sprites.png", 0, 1, 20.f, 20.f,
   playerScale, playerSpeed, new sf::Vector2f(1245, 1750), window, world);
 
   character1->SetTagName("Player");
   gameObjects->push_back(character1);
+
+  enemy = new Enemy("assets/sprites.png", 0, 0, 20.f, 20.f,
+  playerScale, playerSpeed-400, new sf::Vector2f(1245, 950), window, world);
+
+  enemy->SetTagName("Enemy");
+  gameObjects->push_back(enemy);
 
   Walls();
   Objects();
@@ -75,6 +85,11 @@ void Game::Draw()
 
 void Game::Render()
 {
+  for(auto& gameObject : *deleteList){
+    gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), gameObject), gameObjects->end());
+    delete gameObject;
+  }
+  deleteList->clear();
   window->clear(sf::Color(0, 0, 0, 255));
   Draw();
   window->display();
@@ -116,9 +131,12 @@ void Game::Update()
     {
       gameObject->Update(deltaTime);
     }
-    Render();
 
+    Render();
     view1.setCenter(character1->GetPosition());
+    enemy->PlayerPos(sf::Vector2f(character1->GetPosition()));
+    //
+    std::cout << "enemigo X: " << enemy->GetPosition().x << " enemigo Y: " << enemy->GetPosition().y << std::endl;
     window->setView(view1);
 
   }

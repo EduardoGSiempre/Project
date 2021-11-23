@@ -14,6 +14,7 @@ private:
   b2World* world{};
   b2Draw* drawPhysics{};
   std::vector<GameObject*>* gameObjects;
+  std::vector<GameObject*>* deleteList;
   ContactEventManager* contactEventManager{};
 public:
   Game();
