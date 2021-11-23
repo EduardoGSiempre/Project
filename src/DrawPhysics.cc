@@ -31,7 +31,7 @@ DrawPhysics::~DrawPhysics()
     //polygon.setFillColor(sf::Color::Transparent);
     polygon.setOutlineColor(DrawPhysics::GLColorToSFML(color));
 
-    window->draw(polygon);
+    //window->draw(polygon);
   }
 
 	/// Draw a circle.

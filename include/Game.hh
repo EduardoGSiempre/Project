@@ -3,6 +3,7 @@
 #include<box2d/box2d.h>
 #include "DrawPhysics.hh"
 #include "GameObject.hh"
+#include "ContactEventManager.hh"
 
 class Game
 {
@@ -13,6 +14,7 @@ private:
   b2World* world{};
   b2Draw* drawPhysics{};
   std::vector<GameObject*>* gameObjects;
+  ContactEventManager* contactEventManager{};
 public:
   Game();
   ~Game();
@@ -23,4 +25,6 @@ public:
   void Update();
   void Draw();
   void Inputs();
+  void Walls();
+  void Objects();
 };

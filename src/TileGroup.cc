@@ -22,9 +22,6 @@ TileGroup::~TileGroup()
 
 void TileGroup::GenerateGroup()
 {
-  /*tiles->push_back(new Tile("assets/tile.png", 0, 2, 16.f, 16.f, 4.f, new sf::Vector2f(16*0, 0)));
-  tiles->push_back(new Tile("assets/tile.png", 1, 2, 16.f, 16.f, 4.f, new sf::Vector2f(16*1, 0)));
-  tiles->push_back(new Tile("assets/tile.png", 2, 2, 16.f, 16.f, 4.f, new sf::Vector2f(16*2, 0)));*/
 
   reader->open(tgFile);
   for(int y{}; y < rows; y++)

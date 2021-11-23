@@ -12,8 +12,8 @@ GameObject(textureUrl, col, row, width, height, scale, position, b2BodyType::b2_
   this->moveSpeed = moveSpeed;
   rigidbody->SetRotationFreeze(true);
 
-  idleAnimation = new Animation(0, 5, drawable, 0.05f, 5);
-  runAnimation = new Animation(0, 5, drawable, 0.08f, 6);
+  idleAnimation = new Animation(0, 7, drawable, 0.08f, 1);
+  runAnimation = new Animation(0, 7, drawable, 0.1f, 2);
 }
 
 Character::~Character()

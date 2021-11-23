@@ -12,7 +12,7 @@ sf::Vector2f* position, b2BodyType bodyType,sf::RenderWindow*& window, b2World*&
   rigidbody = new Rigidbody(world, bodyType,
   new b2Vec2(drawable->GetPosition().x, drawable->GetPosition().y),
   width * scale / 2, height * scale / 2, 1, 0, 0,
-  b2Vec2(drawable->GetSprite()->getOrigin().x , drawable->GetSprite()->getOrigin().y), 0.f);
+  b2Vec2(drawable->GetSprite()->getOrigin().x , drawable->GetSprite()->getOrigin().y), 0.f, (void*) this);
 
   drawable->GetSprite()->setOrigin(width / 2, height / 2);
 }
@@ -29,6 +29,15 @@ void GameObject::Update(float& deltaTime)
 void GameObject::Draw()
 {
   window->draw(*drawable->GetSprite());
+}
+
+const char* GameObject::GetTagName() const
+{
+  return tagName;
+}
+void GameObject::SetTagName(const char* tagName)
+{
+  this->tagName = tagName;
 }
 
 sf::Vector2f GameObject::GetPosition()
