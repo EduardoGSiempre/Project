@@ -25,6 +25,7 @@ float density, float friction, float restitution, b2Vec2 origin, float angle, vo
 
 Rigidbody::~Rigidbody()
 {
+  world->DestroyBody(body);
 }
 
 b2Body* Rigidbody::GetBody() const

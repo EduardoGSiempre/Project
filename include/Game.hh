@@ -9,6 +9,7 @@ class Game
 {
 private:
   sf::RenderWindow* window{};
+  sf::RenderWindow* windowWin{};
   sf::Event* event{};
   b2Vec2* gravity{};
   b2World* world{};

@@ -36,6 +36,7 @@ TileGroup* tileGroup{};
 Game::Game()
 {
   window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), GAME_NAME);
+  windowWin = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), GAME_NAME);
   event = new sf::Event();
 
   //gravity = new b2Vec2(0.f, -9.8f);
@@ -45,7 +46,6 @@ Game::Game()
   deleteList = new std::vector<GameObject*>();
   contactEventManager = new ContactEventManager(deleteList);
   gameObjects = new std::vector<GameObject*>();
-  
 
   character1 = new Character("assets/sprites.png", 0, 1, 20.f, 20.f,
   playerScale, playerSpeed, new sf::Vector2f(1245, 1750), window, world);
@@ -93,12 +93,14 @@ void Game::Render()
   window->clear(sf::Color(0, 0, 0, 255));
   Draw();
   window->display();
+  
 }
 void Game::Init()
 {
   world->SetDebugDraw(drawPhysics);
   drawPhysics->SetFlags(b2Draw::e_shapeBit);
   world->SetContactListener(contactEventManager);
+  windowWin->setVisible(false);
   Update();
 }
 
@@ -135,9 +137,56 @@ void Game::Update()
     Render();
     view1.setCenter(character1->GetPosition());
     enemy->PlayerPos(sf::Vector2f(character1->GetPosition()));
-    //
-    std::cout << "enemigo X: " << enemy->GetPosition().x << " enemigo Y: " << enemy->GetPosition().y << std::endl;
+    //std::cout << "enemigo X: " << enemy->GetPosition().x << " enemigo Y: " << enemy->GetPosition().y << std::endl;
     window->setView(view1);
+
+    if(contactEventManager->GetScore() == 5)
+    {
+      sf::Texture* gameWin {new sf::Texture()};
+      gameWin->loadFromFile("assets/win.png");
+      sf::Sprite* fondoGameWin {new sf::Sprite(*gameWin)};
+      window->setVisible(false);
+      window->setActive(false);
+      windowWin->setVisible(true);
+
+      while (windowWin->isOpen())
+      {
+         while (windowWin->pollEvent(*event))
+          {
+            if (event->type == sf::Event::Closed)
+            {
+              windowWin->close();
+            }
+          }
+            windowWin->clear(sf::Color(0, 0, 0, 255));           
+            windowWin->draw(*fondoGameWin);                  
+            windowWin->display();
+        }
+    }
+
+    if(contactEventManager->Status())
+    {
+      sf::Texture* gameLose {new sf::Texture()};
+      gameLose->loadFromFile("assets/lose.png");
+      sf::Sprite* fondoGameLose {new sf::Sprite(*gameLose)};
+      window->setVisible(false);
+      window->setActive(false);
+      windowWin->setVisible(true);
+
+      while (windowWin->isOpen())
+      {
+         while (windowWin->pollEvent(*event))
+          {
+            if (event->type == sf::Event::Closed)
+            {
+              windowWin->close();
+            }
+          }
+            windowWin->clear(sf::Color(0, 0, 0, 255));           
+            windowWin->draw(*fondoGameLose);                  
+            windowWin->display();
+        }
+    }
 
   }
 

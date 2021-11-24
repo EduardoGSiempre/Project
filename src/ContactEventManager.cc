@@ -6,6 +6,7 @@ ContactEventManager::ContactEventManager(std::vector<GameObject*>*& deleteList)
 {
     this->deleteList = deleteList;
     this->cont = 0;
+    this->caught = false;
 }
 
 ContactEventManager::~ContactEventManager()
@@ -21,8 +22,6 @@ void ContactEventManager::BeginContact(b2Contact *contact)
 
   if(actorA && actorB)
   {
-    std::cout << "collision: " << actorA->GetTagName() << ", " << actorB->GetTagName() << std::endl;
-
     if(objeto == "Heart"){
         cont=cont+1;
         std::cout << "agarraste corazón :" << cont << std::endl;
@@ -30,16 +29,20 @@ void ContactEventManager::BeginContact(b2Contact *contact)
       }
 
     if(objeto == "Enemy"){
-        std::cout << "Inserte pantalla de derrota :" << cont << std::endl;
+        caught=true;
       }  
   }
-    
-    if(cont==5){
-        std::cout << "inserte pantalla de victoria " << std::endl;
-    }
 }
 void ContactEventManager::EndContact(b2Contact *contact)
 {
 
+}
+
+int ContactEventManager::GetScore(){
+  return cont;
+}
+
+bool ContactEventManager::Status(){
+  return caught;
 }
 
