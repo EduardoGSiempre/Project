@@ -3,16 +3,20 @@
 #include<box2d/box2d.h>
 #include "DrawPhysics.hh"
 #include "GameObject.hh"
+#include "ContactEventManager.hh"
 
 class Game
 {
 private:
   sf::RenderWindow* window{};
+  sf::RenderWindow* windowWin{};
   sf::Event* event{};
   b2Vec2* gravity{};
   b2World* world{};
   b2Draw* drawPhysics{};
   std::vector<GameObject*>* gameObjects;
+  std::vector<GameObject*>* deleteList;
+  ContactEventManager* contactEventManager{};
 public:
   Game();
   ~Game();
@@ -23,4 +27,6 @@ public:
   void Update();
   void Draw();
   void Inputs();
+  void Walls();
+  void Objects();
 };

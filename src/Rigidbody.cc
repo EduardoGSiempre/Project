@@ -2,7 +2,7 @@
 
 Rigidbody::Rigidbody(){}
 Rigidbody::Rigidbody(b2World*& world, b2BodyType bodyType, b2Vec2* position, float width, float height,
-float density, float friction, float restitution, b2Vec2 origin, float angle)
+float density, float friction, float restitution, b2Vec2 origin, float angle, void* userData)
 {
   this->world = world;
   bodyDef = new b2BodyDef();
@@ -19,10 +19,13 @@ float density, float friction, float restitution, b2Vec2 origin, float angle)
   fixtureDef->restitution = restitution;
 
   fixture = body->CreateFixture(fixtureDef);
+
+  body->GetUserData().pointer = reinterpret_cast<uintptr_t>(userData);
 }
 
 Rigidbody::~Rigidbody()
 {
+  world->DestroyBody(body);
 }
 
 b2Body* Rigidbody::GetBody() const
@@ -33,6 +36,7 @@ b2Body* Rigidbody::GetBody() const
 sf::Vector2f Rigidbody::GetPositionSFML() const
 {
   return sf::Vector2f(body->GetPosition().x, body->GetPosition().y);
+
 }
 
 void Rigidbody::Move(b2Vec2 direction)
